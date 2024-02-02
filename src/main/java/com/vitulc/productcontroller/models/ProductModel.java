@@ -1,6 +1,6 @@
-package com.vitulc.springboot.models;
+package com.vitulc.productcontroller.models;
 
-import com.vitulc.springboot.dtos.ProductRecordDto;
+import com.vitulc.productcontroller.dtos.ProductRecordDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.vitulc.springboot.enums;
+package com.vitulc.productcontroller.enums;
 
 public enum UserRole {
 

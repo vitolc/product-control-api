@@ -1,4 +1,4 @@
-package com.vitulc.springboot.dtos;
+package com.vitulc.productcontroller.dtos;
 
 public record LoginResponseRecordDto(String token) {
 }

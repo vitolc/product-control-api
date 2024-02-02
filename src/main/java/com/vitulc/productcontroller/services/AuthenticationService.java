@@ -1,11 +1,11 @@
-package com.vitulc.springboot.services;
+package com.vitulc.productcontroller.services;
 
-import com.vitulc.springboot.configs.TokenService;
-import com.vitulc.springboot.dtos.AuthenticationRecordDto;
-import com.vitulc.springboot.dtos.LoginResponseRecordDto;
-import com.vitulc.springboot.dtos.RegisterRecordDto;
-import com.vitulc.springboot.models.UserModel;
-import com.vitulc.springboot.repositories.UserRepository;
+import com.vitulc.productcontroller.configs.TokenService;
+import com.vitulc.productcontroller.dtos.AuthenticationRecordDto;
+import com.vitulc.productcontroller.dtos.LoginResponseRecordDto;
+import com.vitulc.productcontroller.dtos.RegisterRecordDto;
+import com.vitulc.productcontroller.models.UserModel;
+import com.vitulc.productcontroller.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

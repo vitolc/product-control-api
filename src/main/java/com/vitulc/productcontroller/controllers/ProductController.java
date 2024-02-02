@@ -1,8 +1,8 @@
-package com.vitulc.springboot.controllers;
+package com.vitulc.productcontroller.controllers;
 
-import com.vitulc.springboot.dtos.ProductRecordDto;
-import com.vitulc.springboot.models.ProductModel;
-import com.vitulc.springboot.services.ProductService;
+import com.vitulc.productcontroller.dtos.ProductRecordDto;
+import com.vitulc.productcontroller.models.ProductModel;
+import com.vitulc.productcontroller.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

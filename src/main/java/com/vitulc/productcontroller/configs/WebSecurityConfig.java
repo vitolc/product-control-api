@@ -1,4 +1,4 @@
-package com.vitulc.springboot.configs;
+package com.vitulc.productcontroller.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

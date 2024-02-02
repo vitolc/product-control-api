@@ -1,7 +1,7 @@
-package com.vitulc.springboot.models;
+package com.vitulc.productcontroller.models;
 
-import com.vitulc.springboot.dtos.RegisterRecordDto;
-import com.vitulc.springboot.enums.UserRole;
+import com.vitulc.productcontroller.dtos.RegisterRecordDto;
+import com.vitulc.productcontroller.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;

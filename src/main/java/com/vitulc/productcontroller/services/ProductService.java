@@ -1,15 +1,13 @@
-package com.vitulc.springboot.services;
+package com.vitulc.productcontroller.services;
 
-import com.vitulc.springboot.controllers.ProductController;
-import com.vitulc.springboot.dtos.ProductRecordDto;
-import com.vitulc.springboot.models.ProductModel;
-import com.vitulc.springboot.repositories.ProductRepository;
+import com.vitulc.productcontroller.controllers.ProductController;
+import com.vitulc.productcontroller.dtos.ProductRecordDto;
+import com.vitulc.productcontroller.models.ProductModel;
+import com.vitulc.productcontroller.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
-import org.hibernate.mapping.Any;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 import java.util.Optional;

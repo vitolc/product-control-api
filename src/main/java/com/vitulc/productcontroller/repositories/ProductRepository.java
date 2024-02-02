@@ -1,6 +1,6 @@
-package com.vitulc.springboot.repositories;
+package com.vitulc.productcontroller.repositories;
 
-import com.vitulc.springboot.models.ProductModel;
+import com.vitulc.productcontroller.models.ProductModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
