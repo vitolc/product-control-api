@@ -7,7 +7,7 @@ import com.vitulc.productcontroller.dtos.RegisterRecordDto;
 import com.vitulc.productcontroller.models.UserModel;
 import com.vitulc.productcontroller.repositories.UserRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,17 +29,28 @@ public class AuthenticationService implements UserDetailsService {
     @Transactional
     public ResponseEntity<Object> registerUser(RegisterRecordDto newUserData) {
 
+        if (userRepository.existsByUsername(newUserData.username())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("USERNAME ALREADY EXISTS");
+        }
+
         var encryptedPassword = tokenService.passwordEncoder().encode(newUserData.password());
         var newUser = new UserModel(newUserData, encryptedPassword);
-
         this.userRepository.save(newUser);
         return ResponseEntity.ok().body("SUCCESSFULLY REGISTERED USER");
     }
 
     @Transactional
-    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationRecordDto authenticationData) {
+    public ResponseEntity<Object> login(@RequestBody AuthenticationRecordDto authenticationData) {
 
         var user = this.userRepository.findByUsername(authenticationData.username());
+
+        if (authenticationData.username().isEmpty() ||
+                !userRepository.existsByUsername(authenticationData.username()) ||
+                !tokenService.passwordEncoder().matches(authenticationData.password(), user.getPassword())
+        ) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("INVALID USERNAME OR PASSWORD");
+        }
+
         var token = tokenService.generateToken(user);
 
         return ResponseEntity.ok(new LoginResponseRecordDto(token));

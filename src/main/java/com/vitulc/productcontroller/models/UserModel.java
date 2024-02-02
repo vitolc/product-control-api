@@ -31,7 +31,7 @@ public class UserModel implements UserDetails, Serializable {
     private String password;
 
     @NotBlank
-    @Column(nullable = false, unique = true)
+    @Column( unique = true)
     private String username;
 
     @Enumerated(EnumType.STRING)
