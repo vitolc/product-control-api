@@ -50,10 +50,17 @@ public class AuthenticationService implements UserDetailsService {
         ) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("INVALID USERNAME OR PASSWORD");
         }
-
         var token = tokenService.generateToken(user);
-
         return ResponseEntity.ok(new LoginResponseRecordDto(token));
+    }
+
+    public ResponseEntity<Object> deleteUser(String username) {
+        var user = userRepository.findByUsername(username);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("USER NOT FOUND");
+        }
+        userRepository.delete(user);
+        return ResponseEntity.ok().body("SUCCESSFULLY DELETED USER");
     }
 
     @Override

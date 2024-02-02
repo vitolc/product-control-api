@@ -5,10 +5,7 @@ import com.vitulc.productcontroller.dtos.RegisterRecordDto;
 import com.vitulc.productcontroller.services.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -29,5 +26,10 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody @Valid RegisterRecordDto newUserData) {
         return authenticationService.registerUser(newUserData);
+    }
+
+    @DeleteMapping("/delete/{username}")
+    public ResponseEntity<Object> deleteUser(@PathVariable String username) {
+        return authenticationService.deleteUser(username);
     }
 }
