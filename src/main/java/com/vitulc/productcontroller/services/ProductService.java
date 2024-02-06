@@ -1,6 +1,6 @@
 package com.vitulc.productcontroller.services;
 
-import com.vitulc.productcontroller.controllers.ProductController;
+import com.vitulc.productcontroller.dtos.ProductResponseRecordDto;
 import com.vitulc.productcontroller.dtos.ProductRecordDto;
 import com.vitulc.productcontroller.models.ProductModel;
 import com.vitulc.productcontroller.repositories.ProductRepository;
@@ -13,9 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 @Service
 public class ProductService {
 
@@ -26,47 +23,41 @@ public class ProductService {
     }
 
     @Transactional
-    public ResponseEntity<ProductModel> createProduct(ProductRecordDto productRecordDto) {
-        var productModel = new ProductModel(productRecordDto);
-        return ResponseEntity.status(HttpStatus.OK).body(this.productRepository.save(productModel));
+    public ResponseEntity<String> createProduct(ProductRecordDto productRecordDto) {
+      ProductModel productModel = new ProductModel(productRecordDto);
+      productRepository.save(productModel);
+      return ResponseEntity.status(HttpStatus.CREATED).body("PRODUCT CREATED SUCCESSFULLY");
     }
 
-    public ResponseEntity<List<ProductModel>> getAllProducts() {
-
-        List<ProductModel> productsList = this.productRepository.findAll();
-
-        if(!productsList.isEmpty()){
-            for (ProductModel product: productsList){
-                UUID id = product.getIdProduct();
-                product.add(linkTo(methodOn(ProductController.class).getProductById(id)).withSelfRel());
-            }
-        }
+    public ResponseEntity<List<ProductResponseRecordDto>> getAllProducts() {
+        List<ProductResponseRecordDto> productsList = productRepository.findAll().stream().map(ProductResponseRecordDto::new).toList();
         return ResponseEntity.status(HttpStatus.OK).body(productsList);
     }
 
-    @Transactional
-    public ResponseEntity<ProductModel> getProductById(UUID id){
-        var productModel = this.productRepository.findById(id).orElseThrow(() -> new RuntimeException("PRODUCT NOT FOUND"));
-        productModel.add(linkTo(methodOn(ProductController.class).getAllProducts()).withSelfRel());
-        return ResponseEntity.status(HttpStatus.OK).body(productModel);
+    public ResponseEntity<ProductResponseRecordDto> getProductById(UUID id){
+        ProductModel productModel = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("PRODUCT NOT FOUND"));
+        ProductResponseRecordDto productResponseRecordDto = new ProductResponseRecordDto(productModel);
+        return ResponseEntity.status(HttpStatus.OK).body(productResponseRecordDto);
     }
 
     @Transactional
-    public ResponseEntity<ProductModel> editProduct(UUID id, ProductRecordDto productRecordDto){
+    public ResponseEntity<String> editProduct(UUID id, ProductRecordDto productRecordDto){
         var productModel = this.productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("PRODUCT NOT FOUND"));
         productModel.setName(productRecordDto.name());
         productModel.setValue(productRecordDto.value());
         this.productRepository.save(productModel);
-        return ResponseEntity.status(HttpStatus.OK).body(productModel);
+        return ResponseEntity.status(HttpStatus.OK).body("PRODUCT UPDATE SUCCESSFULLY");
     }
 
-    public ResponseEntity<Object> deleteProduct(UUID id){
+    @Transactional
+    public ResponseEntity<String> deleteProduct(UUID id){
         Optional<ProductModel> deletedProduct = productRepository.findById(id);
         if (deletedProduct.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT NOT FOUND");
         }
         productRepository.delete(deletedProduct.get());
-        return ResponseEntity.status(HttpStatus.OK).body("PRODUCT DELETED SUCCESSFULY");
+        return ResponseEntity.status(HttpStatus.OK).body("PRODUCT DELETED SUCCESSFULLY");
     }
 }

@@ -2,10 +2,11 @@ package com.vitulc.productcontroller.enums;
 
 public enum UserRole {
 
-    ADMIN("admin"),
-    USER("user");
+    ADMIN("ADMIN"),
+    USER("USER");
 
     private final String role;
+
     UserRole(String role) {
         this.role = role;
     }

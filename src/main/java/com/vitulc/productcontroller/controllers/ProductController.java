@@ -1,7 +1,7 @@
 package com.vitulc.productcontroller.controllers;
 
+import com.vitulc.productcontroller.dtos.ProductResponseRecordDto;
 import com.vitulc.productcontroller.dtos.ProductRecordDto;
-import com.vitulc.productcontroller.models.ProductModel;
 import com.vitulc.productcontroller.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,27 +20,32 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductModel> createProduct(@RequestBody ProductRecordDto productRecordDto){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<String> createProduct(@RequestBody ProductRecordDto productRecordDto){
         return this.productService.createProduct(productRecordDto);
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductModel>> getAllProducts (){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<List<ProductResponseRecordDto>> getAllProducts (){
         return this.productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductModel> getProductById (@PathVariable UUID id){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<ProductResponseRecordDto> getProductById (@PathVariable UUID id){
        return this.productService.getProductById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductModel> editProduct (@PathVariable UUID id, @RequestBody ProductRecordDto productRecordDto){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<String> editProduct (@PathVariable UUID id, @RequestBody ProductRecordDto productRecordDto){
         return this.productService.editProduct(id, productRecordDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteProduct (@PathVariable UUID id) {
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<String> deleteProduct (@PathVariable UUID id) {
         return this.productService.deleteProduct(id);
     }
 

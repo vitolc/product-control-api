@@ -24,18 +24,19 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+       return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/auth/delete/{username}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/products").permitAll()
                         .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/products/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/products/{id}").hasRole("ADMIN")
                         .anyRequest().authenticated())
-                        .addFilterBefore(webSecurityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .addFilterBefore(webSecurityFilter, UsernamePasswordAuthenticationFilter.class).build();
+
+
     }
 
     @Bean

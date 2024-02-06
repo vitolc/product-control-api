@@ -1,6 +1,6 @@
 package com.vitulc.productcontroller.models;
 
-import com.vitulc.productcontroller.dtos.RegisterRecordDto;
+import com.vitulc.productcontroller.dtos.RegisterResponseRecordDto;
 import com.vitulc.productcontroller.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -37,10 +37,10 @@ public class UserModel implements UserDetails, Serializable {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    public UserModel(RegisterRecordDto registerRecordDto, String encryptPassword) {
-        this.username = registerRecordDto.username();
+    public UserModel(RegisterResponseRecordDto registerResponseRecordDto, String encryptPassword) {
+        this.username = registerResponseRecordDto.username();
         this.password = encryptPassword;
-        this.role = registerRecordDto.role();
+        this.role = registerResponseRecordDto.role();
     }
 
     public UserModel() {

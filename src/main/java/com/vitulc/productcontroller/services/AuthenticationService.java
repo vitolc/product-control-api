@@ -3,7 +3,7 @@ package com.vitulc.productcontroller.services;
 import com.vitulc.productcontroller.configs.TokenService;
 import com.vitulc.productcontroller.dtos.AuthenticationRecordDto;
 import com.vitulc.productcontroller.dtos.LoginResponseRecordDto;
-import com.vitulc.productcontroller.dtos.RegisterRecordDto;
+import com.vitulc.productcontroller.dtos.RegisterResponseRecordDto;
 import com.vitulc.productcontroller.models.UserModel;
 import com.vitulc.productcontroller.repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -27,14 +27,14 @@ public class AuthenticationService implements UserDetailsService {
     }
 
     @Transactional
-    public ResponseEntity<Object> registerUser(RegisterRecordDto newUserData) {
+    public ResponseEntity<Object> registerUser(RegisterResponseRecordDto RegisterResponseRecordDto) {
 
-        if (userRepository.existsByUsername(newUserData.username())) {
+        if (userRepository.existsByUsername(RegisterResponseRecordDto.username())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("USERNAME ALREADY EXISTS");
         }
 
-        var encryptedPassword = tokenService.passwordEncoder().encode(newUserData.password());
-        var newUser = new UserModel(newUserData, encryptedPassword);
+        var encryptedPassword = tokenService.passwordEncoder().encode(RegisterResponseRecordDto.password());
+        var newUser = new UserModel(RegisterResponseRecordDto, encryptedPassword);
         this.userRepository.save(newUser);
         return ResponseEntity.ok().body("SUCCESSFULLY REGISTERED USER");
     }
